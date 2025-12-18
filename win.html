@@ -1,106 +1,84 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
   <meta charset="UTF-8">
-  <title>Certificat – Brandt</title>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Félicitations - Le Défi Brandt</title>
   <style>
-    body {
+    * {
       margin: 0;
-      font-family: Arial, sans-serif;
-      background: linear-gradient(120deg, #1e81b0, #ee4266);
-      color: white;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Roboto', sans-serif;
       display: flex;
       justify-content: center;
       align-items: center;
       min-height: 100vh;
+      background: linear-gradient(120deg, #1e81b0, #ee4266);
+      color: #fff;
       text-align: center;
     }
 
-    .card {
-      background: rgba(255,255,255,0.12);
-      padding: 40px;
+    .container {
+      max-width: 600px;
+      padding: 40px 30px;
+      background: rgba(255, 255, 255, 0.1);
       border-radius: 16px;
-      max-width: 520px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
     }
 
     h1 {
-      font-size: 2.6em;
+      font-size: 2.8em;
       margin-bottom: 20px;
     }
 
     p {
-      font-size: 1.3em;
-      line-height: 1.7;
-      margin-bottom: 30px;
+      font-size: 1.4em;
+      margin-bottom: 35px;
+      line-height: 1.6;
     }
 
-    button {
-      background: #ff2222;
-      border: none;
-      padding: 14px 34px;
-      font-size: 1.1em;
-      color: white;
-      border-radius: 40px;
-      cursor: pointer;
+    .button {
+      display: inline-block;
+      background-color: #ff2222;
+      color: #fff;
+      font-size: 1.3em;
+      padding: 15px 40px;
+      border-radius: 50px;
+      text-decoration: none;
+      transition: background-color 0.3s, transform 0.3s;
+    }
+
+    .button:hover {
+      background-color: #e61919;
+      transform: translateY(-3px);
+    }
+
+    img.logo {
+      width: 180px;
+      margin-top: 30px;
     }
   </style>
 </head>
 
 <body>
+  <div class="container">
+    <h1>🏆 Félicitations !</h1>
+    <p>
+      Vous avez complété avec succès le jeu de Brandt.<br>
+      Vous faites maintenant partie des participants éligibles au tirage au sort.
+    </p>
 
-<div class="card">
-  <h1>🏆 Félicitations</h1>
-  <p>
-    Vous avez complété avec succès le jeu Brandt.<br>
-    Vous êtes désormais éligible au tirage au sort.
-  </p>
-  <button id="download">Télécharger le certificat</button>
-</div>
+    <!-- Download PDF Button -->
+    <a href="Felicitation.pdf" download class="button">Télécharger mon certificat</a>
 
-<script>
-  const { jsPDF } = window.jspdf;
-
-  const firstName = localStorage.getItem("firstName") || "";
-  const lastName = localStorage.getItem("lastName") || "";
-  const phone = localStorage.getItem("phoneNumber") || "";
-
-  // 🔴 PASTE YOUR BASE64 LOGO BELOW
-  const logoBase64 = "PASTE_BASE64_Brandt-logo.png";
-
-  document.getElementById("download").onclick = () => {
-    const doc = new jsPDF();
-
-    doc.setFont("Helvetica", "bold");
-    doc.setFontSize(22);
-    doc.text("CERTIFICAT DE PARTICIPATION", 105, 30, { align: "center" });
-
-    doc.setFontSize(14);
-    doc.setFont("Helvetica", "normal");
-
-    doc.text(
-`Félicitations ${firstName} ${lastName},
-
-Vous avez complété avec succès le jeu Brandt
-et faites partie des participants éligibles
-au tirage au sort.
-
-Téléphone : ${phone}`,
-      105,
-      60,
-      { align: "center" }
-    );
-
-    // Logo (always works)
-    doc.addImage(logoBase64, "PNG", 55, 130, 100, 30);
-
-    doc.save("Certificat_Brandt.pdf");
-  };
-</script>
-
+    <!-- Brandt Logo -->
+    <img src="Brandt-Logo.png" alt="Brandt Logo" class="logo">
+  </div>
 </body>
-</html>
 
+</html>
