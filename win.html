@@ -1,58 +1,50 @@
 <!DOCTYPE html>
 <html lang="fr">
-
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Félicitations - Le Défi Brandt</title>
+  <title>Certificat – Brandt</title>
 
-  <!-- jsPDF -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
     body {
-      font-family: 'Roboto', sans-serif;
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(120deg, #1e81b0, #ee4266);
+      color: white;
       display: flex;
       justify-content: center;
       align-items: center;
       min-height: 100vh;
-      background: linear-gradient(120deg, #1e81b0, #ee4266);
-      color: #fff;
       text-align: center;
     }
 
-    .container {
-      max-width: 600px;
-      padding: 30px;
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 12px;
-      box-shadow: 0 8px 15px rgba(0,0,0,0.2);
+    .card {
+      background: rgba(255,255,255,0.12);
+      padding: 40px;
+      border-radius: 16px;
+      max-width: 520px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.25);
     }
 
     h1 {
-      font-size: 2.5em;
+      font-size: 2.6em;
       margin-bottom: 20px;
     }
 
     p {
-      font-size: 1.4em;
+      font-size: 1.3em;
+      line-height: 1.7;
       margin-bottom: 30px;
-      line-height: 1.6;
     }
 
     button {
-      background-color: #ff2222;
-      color: #fff;
-      font-size: 1.2em;
-      padding: 12px 25px;
-      border-radius: 50px;
+      background: #ff2222;
       border: none;
+      padding: 14px 34px;
+      font-size: 1.1em;
+      color: white;
+      border-radius: 40px;
       cursor: pointer;
     }
   </style>
@@ -60,62 +52,54 @@
 
 <body>
 
-  <div class="container">
-    <h1>🏆 Félicitations !</h1>
-    <p>
-      Vous avez complété avec succès le jeu de Brandt.<br>
-      Vous faites maintenant partie des participants éligibles au tirage au sort.
-    </p>
+<div class="card">
+  <h1>🏆 Félicitations</h1>
+  <p>
+    Vous avez complété avec succès le jeu Brandt.<br>
+    Vous êtes désormais éligible au tirage au sort.
+  </p>
+  <button id="download">Télécharger le certificat</button>
+</div>
 
-    <button id="downloadPdf">Télécharger mon certificat</button>
-  </div>
+<script>
+  const { jsPDF } = window.jspdf;
 
-  <script>
-    const firstName = localStorage.getItem("firstName") || "";
-    const lastName = localStorage.getItem("lastName") || "";
-    const phoneNumber = localStorage.getItem("phoneNumber") || "";
+  const firstName = localStorage.getItem("firstName") || "";
+  const lastName = localStorage.getItem("lastName") || "";
+  const phone = localStorage.getItem("phoneNumber") || "";
 
-    document.getElementById("downloadPdf").addEventListener("click", function () {
+  // 🔴 PASTE YOUR BASE64 LOGO BELOW
+  const logoBase64 = "PASTE_BASE64_LOGO_HERE";
 
-      const { jsPDF } = window.jspdf;
-      const doc = new jsPDF();
+  document.getElementById("download").onclick = () => {
+    const doc = new jsPDF();
 
-      // ===== BIG CENTERED TEXT =====
-      doc.setFont("Helvetica", "bold");
-      doc.setFontSize(20);
-      doc.text("FÉLICITATIONS !", 105, 30, { align: "center" });
+    doc.setFont("Helvetica", "bold");
+    doc.setFontSize(22);
+    doc.text("CERTIFICAT DE PARTICIPATION", 105, 30, { align: "center" });
 
-      doc.setFontSize(14);
-      doc.setFont("Helvetica", "normal");
+    doc.setFontSize(14);
+    doc.setFont("Helvetica", "normal");
 
-      doc.text(
-        `Vous avez complété avec succès le jeu de Brandt.
-Vous faites maintenant partie des participants
-éligibles au tirage au sort.`,
-        105,
-        50,
-        { align: "center" }
-      );
+    doc.text(
+`Félicitations ${firstName} ${lastName},
 
-      // ===== PARTICIPANT INFO =====
-      doc.setFont("Helvetica", "bold");
-      doc.text("Informations du participant :", 105, 85, { align: "center" });
+Vous avez complété avec succès le jeu Brandt
+et faites partie des participants éligibles
+au tirage au sort.
 
-      doc.setFont("Helvetica", "normal");
-      doc.text(`Prénom : ${firstName}`, 105, 100, { align: "center" });
-      doc.text(`Nom : ${lastName}`, 105, 110, { align: "center" });
-      doc.text(`Téléphone : ${phoneNumber}`, 105, 120, { align: "center" });
+Téléphone : ${phone}`,
+      105,
+      60,
+      { align: "center" }
+    );
 
-      // ===== BRANDT LOGO =====
-      const logo = new Image();
-      logo.src = "Brandt-Logo.png";
+    // Logo (always works)
+    doc.addImage(logoBase64, "PNG", 55, 130, 100, 30);
 
-      logo.onload = function () {
-        doc.addImage(logo, "PNG", 60, 135, 90, 30);
-        doc.save("Certificat_Brandt.pdf");
-      };
-    });
-  </script>
+    doc.save("Certificat_Brandt.pdf");
+  };
+</script>
 
 </body>
 </html>
